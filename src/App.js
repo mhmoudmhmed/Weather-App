@@ -1,26 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import {withStyles} from '@material-ui/styles';
+import styles from './styles/AppStyles';
+import Home from './Home';
+import Form from './From';
+import Page from './Page';
+import Navbar from './Navbar';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component{
+
+
+  render(){
+
+    const {classes}= this.props;
+
+    return(
+
+      <div className={classes.root}>
+        <Route
+        render={({location}) => (
+          <TransitionGroup>
+            <CSSTransition key={location.key} classNames="fade" timeout={1000}>
+              <Switch location={location}>
+                <Route
+                  exact
+                  path="/weather"
+                  render={() =>
+                    <Page>
+                      <Form />
+                    </Page>
+                }
+                />
+
+                <Route
+                  exact
+                  path="/"
+                  render={() =>
+                    <Page>
+                      <Home />
+                    </Page>
+                }
+                />
+                <Route
+                  exact
+                  render={() => <h1>ERORR 404</h1>}
+                />
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
+        )}
+        />
+        <Navbar />
+      </div>
+      
+    )
+  }
 }
 
-export default App;
+export default withStyles(styles)(App);

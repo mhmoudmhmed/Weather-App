@@ -1,0 +1,20 @@
+.page {
+    font-family: 'Cairo', sans-serif;
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    transition: opacity 0.5s ease-in-out;
+    background-color: #474747;
+    background-image: url('./bg2.svg');
+
+}
+.page-enter {
+    opacity: 0;
+}
+.page-enter-active {
+    opacity: 1;
+}
+.page-exit-active {
+    opacity: 0;
+}
