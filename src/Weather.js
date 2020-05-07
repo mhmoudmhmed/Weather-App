@@ -3,35 +3,39 @@ import {withStyles} from '@material-ui/styles';
 import styles from "./styles/WeatherStyles";
 
 const Weather = (props) => {
-    const {classes, city, country, lon, lat, desc, main} = props;
+    const {classes, city, country, max_temp, min_temp, desc, main, error} = props;
     return(
 
         <div>
             <div className={classes.weather}>
 
                 {
-                    props.city && props.country && <p>{city}, {country}</p>
+                    city && country && <p>{city}, {country}</p>
                 }
 
                 {
-                    props.main && <p>{main}</p>
+                    main && <p>{main}</p>
                 }
 
                 {
-                    lat && lon && 
+                    min_temp && max_temp && 
                     <p>
-                        <span>{lat} &#8451;</span>
+                        <span>{min_temp} &#8451;</span>
                             ,
-                        <span>{lon} &#8451;</span>
+                        <span>{min_temp} &#8451;</span>
                     </p>
                 }
                 
                 {
-                    lon && <p>{lon} &#8451;</p>
+                    max_temp && <p>{max_temp} &#8451;</p>
                 }
 
                 {
                     desc && <p>{desc}</p>
+                }
+
+                {
+                    error && <p> {error} </p>
                 }
             </div>
         </div>

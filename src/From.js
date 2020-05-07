@@ -49,8 +49,8 @@ class Form extends PureComponent  {
                     city : '',
                     main: '',
                     country: '',
-                    lat: '',
-                    lon: '',
+                    min_temp: '',
+                    max_temp: '',
                     desc: '',
                     error: "Enter Correct Name"
                 })
