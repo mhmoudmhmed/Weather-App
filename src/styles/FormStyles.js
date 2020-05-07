@@ -52,10 +52,11 @@ export default {
     },
 
     input: {
-        width: "35%",
+        width: "20%",
         height: "2.3rem",
         borderRaduis: ".5rem",
         backgroundColor: "#E8F0FE",
+        marginLeft: "0.5rem",
         padding: "0.5rem",
         outline: "none",
         focus: "none",

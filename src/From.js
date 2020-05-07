@@ -19,45 +19,47 @@ class Form extends PureComponent  {
             lat: '', // data.coord.lat
             lon: '', // data.coord.lon
             desc: '', // data.weather[0].description,
-            isClick: false
+            error: ""
         }
     }
 
     getWeather = async (e) => {
         e.preventDefault();
         const city = e.target.elements.city.value;
-        const WEATHER_API = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_WEATHER_KEY}`;
+        const country = e.target.elements.city.value;
+        const WEATHER_API = `https://api.openweathermap.org/data/2.5/weather?q=${city}, ${country}&appid=${API_WEATHER_KEY}`;
         let api= await fetch(WEATHER_API).catch((error) => {
             alert('API FAILED', error);
         });
+
         const data = await api.json();        
-    
-        this.setState({
-            city : data.name,
-            main: data.weather[0].main,
-            country: data.sys.country,
-            lat: data.coord.lat,
-            lon: data.coord.lon,
-            desc: data.weather[0].description,
-        })
-    
-    }
 
-    componentDidMount(){
-        if(this.state.city && this.state.country) {
-            this.getWeather();
-        }
-    }
-
-    handleClick = () =>{
-        this.setState({
-            isClick: true
-        })
+            if(city && country) {
+                this.setState({
+                    city : data.name,
+                    main: data.weather[0].main,
+                    country: data.sys.country,
+                    min_temp: data.coord.lat,
+                    max_temp: data.coord.lon,
+                    desc: data.weather[0].description,
+                    error: ''
+                })
+            } else {
+                this.setState({
+                    city : '', //data.name
+                    main: '', //data.weather[0].main
+                    country: '', //data.sys.country
+                    lat: '', // data.coord.lat
+                    lon: '', // data.coord.lon
+                    desc: '', // data.weather[0].description,
+                    error: "Enter Correct Name"
+                })
+            }
     }
 
     render(){
 
-        const {city, country, main, lat, lon, desc} = this.state;
+        const {city, country, main, min_temp, max_temp, desc, error} = this.state;
         const {classes} = this.props;
 
         return(
@@ -67,8 +69,10 @@ class Form extends PureComponent  {
                     <h4>Just type the city name</h4>
                     <p>you must spelling correctly</p>
                 </div>
+
                 <form onSubmit={this.getWeather} className={classes.form}>
                     <input type="text" name="city" placeholder="enter city name" className={classes.input} />
+                    <input type="text" name="country" placeholder="enter country name" className={classes.input} />
                     <button className="btn btn-primary">Find</button>
                 </form>
 
@@ -78,9 +82,10 @@ class Form extends PureComponent  {
                             city={city}
                             country={country}
                             main={main}
-                            lat={lat}
-                            lon={lon}
+                            min_temp={min_temp}
+                            max_temp={max_temp}
                             desc={desc}
+                            error={error}
                         />
                     </CSSTransition>
                 </TransitionGroup>
